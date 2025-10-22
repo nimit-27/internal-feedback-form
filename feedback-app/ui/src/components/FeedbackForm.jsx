@@ -1,4 +1,14 @@
 import React, { useState } from 'react';
+import {
+    Box,
+    Button,
+    Card,
+    CardContent,
+    Stack,
+    TextField,
+    Typography,
+    MenuItem,
+} from '@mui/material';
 import feedbackApi from '../api/feedbackApi';
 
 const divisionOptions = ['Division A', 'Division B', 'Division C'];
@@ -80,104 +90,197 @@ const FeedbackForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
-            <div>
-                <label>S. No.:</label>
-                <input type="text" value={serialNumber ? serialNumber : 'Auto-generated after submission'} readOnly />
-            </div>
-            <div>
-                <label htmlFor="division">Division *</label>
-                <select id="division" name="division" value={formValues.division} onChange={handleChange} required>
-                    <option value="">Select division</option>
-                    {divisionOptions.map((option) => (
-                        <option key={option} value={option}>
-                            {option}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <div>
-                <label htmlFor="depot">Depot *</label>
-                <select id="depot" name="depot" value={formValues.depot} onChange={handleChange} required>
-                    <option value="">Select depot</option>
-                    {depotOptions.map((option) => (
-                        <option key={option} value={option}>
-                            {option}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <div>
-                <label htmlFor="submittedBy">Submitted by *</label>
-                <select id="submittedBy" name="submittedBy" value={formValues.submittedBy} onChange={handleChange} required>
-                    <option value="">Select submitter</option>
-                    {submittedByOptions.map((option) => (
-                        <option key={option} value={option}>
-                            {option}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <div>
-                <label htmlFor="contactNumber">Contact Number *</label>
-                <input type="tel" id="contactNumber" name="contactNumber" value={formValues.contactNumber} onChange={handleChange} required />
-            </div>
-            <div>
-                <label htmlFor="dateOfObservation">Date of Observation *</label>
-                <input type="date" id="dateOfObservation" name="dateOfObservation" value={formValues.dateOfObservation} onChange={handleChange} required />
-            </div>
-            <div>
-                <label htmlFor="module">Module *</label>
-                <select id="module" name="module" value={formValues.module} onChange={handleChange} required>
-                    <option value="">Select module</option>
-                    {moduleOptions.map((option) => (
-                        <option key={option} value={option}>
-                            {option}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <div>
-                <label htmlFor="describeObservation">Describe Observation *</label>
-                <textarea id="describeObservation" name="describeObservation" value={formValues.describeObservation} onChange={handleChange} rows={3} required />
-            </div>
-            <div>
-                <label htmlFor="testId">Test ID</label>
-                <input type="text" id="testId" name="testId" value={formValues.testId} onChange={handleChange} />
-            </div>
-            <div>
-                <label htmlFor="scenario">Scenario</label>
-                <textarea id="scenario" name="scenario" value={formValues.scenario} onChange={handleChange} rows={3} />
-            </div>
-            <div>
-                <label htmlFor="expectedResult">Expected Result</label>
-                <textarea id="expectedResult" name="expectedResult" value={formValues.expectedResult} onChange={handleChange} rows={3} />
-            </div>
-            <div>
-                <label htmlFor="actualResult">Actual Result</label>
-                <textarea id="actualResult" name="actualResult" value={formValues.actualResult} onChange={handleChange} rows={3} />
-            </div>
-            <div>
-                <label htmlFor="attachment">Screenshot / Video of Feedback</label>
-                <input type="file" id="attachment" name="attachment" accept="image/*,video/*" onChange={(event) => setAttachment(event.target.files?.[0] ?? null)} />
-            </div>
-            <div>
-                <label htmlFor="remark">Remark (If any)</label>
-                <input type="text" id="remark" name="remark" value={formValues.remark} onChange={handleChange} />
-            </div>
-            <div>
-                <label htmlFor="suggestions">Suggestions / Improvements</label>
-                <input type="text" id="suggestions" name="suggestions" value={formValues.suggestions} onChange={handleChange} />
-            </div>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            {success && (
-                <p style={{ color: 'green' }}>
-                    {success}
-                    {serialNumber && ` Reference ID: ${serialNumber}`}
-                </p>
-            )}
-            <button type="submit">Submit Feedback</button>
-        </form>
+        <Card
+            sx={{
+                width: { xs: '100%', sm: '70%', md: '40%' },
+                mx: 'auto',
+                boxShadow: 6,
+                borderRadius: 3,
+            }}
+        >
+            <CardContent sx={{ p: { xs: 3, md: 4 } }}>
+                <Box component="form" onSubmit={handleSubmit} encType="multipart/form-data">
+                    <Stack spacing={2.5}>
+                        <TextField
+                            label="S. No."
+                            value={serialNumber ? serialNumber : 'Auto-generated after submission'}
+                            InputProps={{ readOnly: true }}
+                            fullWidth
+                        />
+                        <TextField
+                            select
+                            label="Division *"
+                            name="division"
+                            value={formValues.division}
+                            onChange={handleChange}
+                            required
+                            fullWidth
+                        >
+                            <MenuItem value="">Select division</MenuItem>
+                            {divisionOptions.map((option) => (
+                                <MenuItem key={option} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                        <TextField
+                            select
+                            label="Depot *"
+                            name="depot"
+                            value={formValues.depot}
+                            onChange={handleChange}
+                            required
+                            fullWidth
+                        >
+                            <MenuItem value="">Select depot</MenuItem>
+                            {depotOptions.map((option) => (
+                                <MenuItem key={option} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                        <TextField
+                            select
+                            label="Submitted by *"
+                            name="submittedBy"
+                            value={formValues.submittedBy}
+                            onChange={handleChange}
+                            required
+                            fullWidth
+                        >
+                            <MenuItem value="">Select submitter</MenuItem>
+                            {submittedByOptions.map((option) => (
+                                <MenuItem key={option} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                        <TextField
+                            label="Contact Number *"
+                            type="tel"
+                            name="contactNumber"
+                            value={formValues.contactNumber}
+                            onChange={handleChange}
+                            required
+                            fullWidth
+                        />
+                        <TextField
+                            label="Date of Observation *"
+                            type="date"
+                            name="dateOfObservation"
+                            value={formValues.dateOfObservation}
+                            onChange={handleChange}
+                            required
+                            fullWidth
+                            InputLabelProps={{ shrink: true }}
+                        />
+                        <TextField
+                            select
+                            label="Module *"
+                            name="module"
+                            value={formValues.module}
+                            onChange={handleChange}
+                            required
+                            fullWidth
+                        >
+                            <MenuItem value="">Select module</MenuItem>
+                            {moduleOptions.map((option) => (
+                                <MenuItem key={option} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                        <TextField
+                            label="Describe Observation *"
+                            name="describeObservation"
+                            value={formValues.describeObservation}
+                            onChange={handleChange}
+                            required
+                            fullWidth
+                            multiline
+                            rows={3}
+                        />
+                        <TextField
+                            label="Test ID"
+                            name="testId"
+                            value={formValues.testId}
+                            onChange={handleChange}
+                            fullWidth
+                        />
+                        <TextField
+                            label="Scenario"
+                            name="scenario"
+                            value={formValues.scenario}
+                            onChange={handleChange}
+                            fullWidth
+                            multiline
+                            rows={3}
+                        />
+                        <TextField
+                            label="Expected Result"
+                            name="expectedResult"
+                            value={formValues.expectedResult}
+                            onChange={handleChange}
+                            fullWidth
+                            multiline
+                            rows={3}
+                        />
+                        <TextField
+                            label="Actual Result"
+                            name="actualResult"
+                            value={formValues.actualResult}
+                            onChange={handleChange}
+                            fullWidth
+                            multiline
+                            rows={3}
+                        />
+                        <Button variant="outlined" component="label">
+                            Upload Screenshot / Video
+                            <input
+                                type="file"
+                                hidden
+                                accept="image/*,video/*"
+                                name="attachment"
+                                onChange={(event) => setAttachment(event.target.files?.[0] ?? null)}
+                            />
+                        </Button>
+                        {attachment && (
+                            <Typography variant="body2" color="text.secondary">
+                                Selected file: {attachment.name}
+                            </Typography>
+                        )}
+                        <TextField
+                            label="Remark (If any)"
+                            name="remark"
+                            value={formValues.remark}
+                            onChange={handleChange}
+                            fullWidth
+                        />
+                        <TextField
+                            label="Suggestions / Improvements"
+                            name="suggestions"
+                            value={formValues.suggestions}
+                            onChange={handleChange}
+                            fullWidth
+                        />
+                        {error && (
+                            <Typography color="error" variant="body2">
+                                {error}
+                            </Typography>
+                        )}
+                        {success && (
+                            <Typography color="success.main" variant="body2">
+                                {success}
+                                {serialNumber && ` Reference ID: ${serialNumber}`}
+                            </Typography>
+                        )}
+                        <Button type="submit" variant="contained" size="large" fullWidth>
+                            Submit Feedback
+                        </Button>
+                    </Stack>
+                </Box>
+            </CardContent>
+        </Card>
     );
 };
 
