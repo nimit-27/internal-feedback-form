@@ -2,7 +2,7 @@
 
 const API_URL = 'http://localhost:8080/api/feedback';
 
-export const submitFeedback = async (feedbackData) => {
+const submitFeedback = async (feedbackData) => {
     try {
         const response = await fetch(API_URL, {
             method: 'POST',
@@ -22,3 +22,9 @@ export const submitFeedback = async (feedbackData) => {
         throw error;
     }
 };
+
+export default {
+    submitFeedback,
+};
+
+export { submitFeedback };
